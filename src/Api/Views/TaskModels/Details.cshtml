@@ -1,0 +1,67 @@
+@model Domain.TaskModelAggregate.Projections.TaskModelDetailsProjection
+
+@{
+    ViewData["Title"] = "Task Details";
+}
+
+<h1>Task Details</h1>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Title</dt>
+            <dd class="col-sm-9">@Model.Title</dd>
+
+            <dt class="col-sm-3">Description</dt>
+            <dd class="col-sm-9">@(string.IsNullOrWhiteSpace(Model.Description) ? "—" : Model.Description)</dd>
+
+            <dt class="col-sm-3">Priority</dt>
+            <dd class="col-sm-9">
+                @{
+                    var priorityBadge = Model.Priority switch
+                    {
+                        "High" => "bg-danger",
+                        "Medium" => "bg-warning text-dark",
+                        _ => "bg-secondary"
+                    };
+                }
+                <span class="badge @priorityBadge">@Model.Priority</span>
+            </dd>
+
+            <dt class="col-sm-3">Deadline</dt>
+            <dd class="col-sm-9">@Model.Deadline.ToString("yyyy-MM-dd HH:mm")</dd>
+
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">
+                @{
+                    var statusBadge = Model.Status switch
+                    {
+                        "Done" => "bg-success",
+                        "Overdue" => "bg-danger",
+                        "Urgent" => "bg-warning text-dark",
+                        _ => "bg-info text-dark"
+                    };
+                }
+                <span class="badge @statusBadge">@Model.Status</span>
+            </dd>
+
+            <dt class="col-sm-3">Completed</dt>
+            <dd class="col-sm-9">
+                @if (Model.IsCompleted)
+                {
+                    <span class="text-success">&#10003; Yes</span>
+                }
+                else
+                {
+                    <span class="text-muted">No</span>
+                }
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a>
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+</div>
