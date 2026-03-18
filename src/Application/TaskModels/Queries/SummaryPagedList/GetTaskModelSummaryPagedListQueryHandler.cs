@@ -9,6 +9,7 @@ namespace Application.TaskModels.Queries.SummaryPagedList;
 internal sealed class GetTaskModelSummaryPagedListQueryHandler(
     ITaskModelRepository repository) : IQueryHandler<GetTaskModelSummaryPagedListQuery, PagedList<TaskModelSummary>>
 {
+    private readonly ITaskModelRepository _repository = repository;
     public async Task<Result<PagedList<TaskModelSummary>>> Handle(
         GetTaskModelSummaryPagedListQuery request, CancellationToken cancellationToken)
     {
@@ -16,7 +17,7 @@ internal sealed class GetTaskModelSummaryPagedListQueryHandler(
             ? parsed
             : TaskModelOrderBy.DeadlineAsc;
 
-        var page = await repository.GetPageSummaryAsync(
+        var page = await _repository.GetPageSummaryAsync(
             request.PageNumber, request.PageSize, orderBy, cancellationToken);
 
         return page;

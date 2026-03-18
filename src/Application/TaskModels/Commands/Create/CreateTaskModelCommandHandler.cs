@@ -12,6 +12,9 @@ internal sealed class CreateTaskModelCommandHandler(
     ITaskModelRepository repository,
     IUnitOfWork unitOfWork) : ICommandHandler<CreateTaskModelCommand, Guid>
 {
+    private readonly ITaskModelRepository _repository = repository;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
+
     public async Task<Result<Guid>> Handle(CreateTaskModelCommand request, CancellationToken cancellationToken)
     {
         var titleResult = TaskModelTitle.Create(request.Title);
@@ -38,8 +41,8 @@ internal sealed class CreateTaskModelCommandHandler(
         if (!taskModelResult.IsSuccess)
             return Result<Guid>.Invalid(taskModelResult.ValidationErrors);
 
-        await repository.AddAsync(taskModelResult.Value, cancellationToken);
-        await unitOfWork.Commit(cancellationToken);
+        await _repository.AddAsync(taskModelResult.Value, cancellationToken);
+        await _unitOfWork.Commit(cancellationToken);
 
         return id.Value;
     }

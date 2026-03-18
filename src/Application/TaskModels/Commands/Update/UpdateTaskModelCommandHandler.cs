@@ -11,9 +11,12 @@ internal sealed class UpdateTaskModelCommandHandler(
     ITaskModelRepository repository,
     IUnitOfWork unitOfWork) : ICommandHandler<UpdateTaskModelCommand>
 {
+    private readonly ITaskModelRepository _repository = repository;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        
     public async Task<Result> Handle(UpdateTaskModelCommand request, CancellationToken cancellationToken)
     {
-        var taskModel = await repository.GetByIdAsync(new TaskModelId(request.Id), cancellationToken);
+        var taskModel = await _repository.GetByIdAsync(new TaskModelId(request.Id), cancellationToken);
         if (taskModel is null)
             return Result.NotFound();
 
@@ -39,8 +42,8 @@ internal sealed class UpdateTaskModelCommandHandler(
         if (!taskModelUpdateResult.IsSuccess)
             return Result.Invalid(taskModelUpdateResult.ValidationErrors);
 
-        await repository.UpdateAsync(taskModel, cancellationToken);
-        await unitOfWork.Commit(cancellationToken);
+        await _repository.UpdateAsync(taskModel, cancellationToken);
+        await _unitOfWork.Commit(cancellationToken);
 
         return Result.Success();
     }

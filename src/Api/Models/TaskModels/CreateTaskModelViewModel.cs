@@ -16,5 +16,5 @@ public sealed class CreateTaskModelViewModel
 
     [Required(ErrorMessage = "Deadline is required.")]
     [DataType(DataType.DateTime)]
-    public DateTime Deadline { get; set; } = DateTime.Now.ToUniversalTime();
+    public DateTime Deadline { get; set; } = DateTime.UtcNow;
 }

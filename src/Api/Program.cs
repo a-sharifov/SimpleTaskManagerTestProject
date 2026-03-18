@@ -34,6 +34,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+if (Env.USE_SEED_DATA)
+{
+
+
+}
+
 app.UseRouting();
 
 app.UseAuthorization();

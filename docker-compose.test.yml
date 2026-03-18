@@ -26,6 +26,7 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_HTTP_PORTS: 80
       POSTGRES_CONNECTION_STRING: Server=postgres;Port=5432;Include Error Detail=True;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};TimeZone=UTC;
+      USE_SEED_DATA: true
     restart: unless-stopped
     ports:
     - "8080:80"
