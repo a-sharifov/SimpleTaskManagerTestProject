@@ -18,6 +18,9 @@ docker compose -f docker-compose.test.yml up -d --build
 
 Open [http://localhost:8080](http://localhost:8080)
 
+> if you want default seed data you need change 
+> in docker-compose.test.yml file `USE_SEED_DATA` env variable to `true` for api service.
+    
 Environment variables are set in `.env` (defaults are pre-filled).
 
 > **Note:** The `.env` file is committed intentionally since this is a test project.
