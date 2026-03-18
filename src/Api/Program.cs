@@ -5,6 +5,7 @@ using Domain.TaskModelAggregate.Repositories;
 using Persistence.Repositories;
 using Persistence.UnitOfWorks;
 using Api;
+using Persistence.Seeds;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddDbContext<TaskManagerDbContext>(options =>
     options.UseNpgsql(Env.POSTGRES_CONNECTION_STRING));
 
+builder.Services.AddTransient<DefaultProjectSeed>();
 builder.Services.AddTransient<ITaskModelRepository, TaskModelRepository>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
@@ -28,16 +30,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
     app.MigrateDbContext<TaskManagerDbContext>();
 
+if (Env.USE_SEED_DATA)
+    app.InstallSeed<DefaultProjectSeed>();
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/TaskModels/Error");
     app.UseHsts();
-}
-
-if (Env.USE_SEED_DATA)
-{
-
-
 }
 
 app.UseRouting();

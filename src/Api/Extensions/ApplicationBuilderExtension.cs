@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Persistence.Seeds.Interfaces;
 using Polly;
 
 namespace Api.Extensions;
@@ -19,5 +20,14 @@ public static class ApplicationBuilderExtension
             .Execute(dbContext.Database.Migrate);
 
         return builder;
+    }
+
+    public static void InstallSeed<TSeed>(
+        this IApplicationBuilder services)
+       where TSeed : ISeeder
+    {
+        using var scope = services.ApplicationServices.CreateScope();
+        var seed = scope.ServiceProvider.GetRequiredService<TSeed>();
+        seed.Seed();
     }
 }
