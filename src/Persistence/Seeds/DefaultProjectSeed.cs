@@ -12,7 +12,7 @@ public sealed class DefaultProjectSeed(TaskManagerDbContext dbContext) : ISeeder
     public readonly TaskManagerDbContext _dbContext = dbContext;
 
     private const int RANDOM_SEED = 100;
-    private const int NUMBER_OF_TASKS = 10;
+    private const int NUMBER_OF_TASKS = 50;
 
     private const int MIN_DEADLINE_DAY = 1;
     private const int MAX_DEADLINE_DAYS = 10;
