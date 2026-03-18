@@ -1,8 +1,17 @@
 # Simple Task Manager
 
 CRUD app for task management.
-
 ---
+
+## Stack
+
+- .NET 10, ASP.NET Core MVC, C# 14
+- PostgreSQL 17 + Entity Framework Core 10
+- MediatR (CQRS), Ardalis.Result, Ardalis.SmartEnum, StronglyTypedId
+- Docker Compose
+  
+---
+
 ## Getting Started
 
 ### Requires 
@@ -39,15 +48,6 @@ POST /TaskModels/Edit/{id}      → Update task
 GET  /TaskModels/Delete/{id}    → Delete confirmation
 POST /TaskModels/Delete/{id}    → Delete task
 ```
----
-
-## Stack
-
-- .NET 10, ASP.NET Core MVC, C# 14
-- PostgreSQL 17 + Entity Framework Core 10
-- MediatR (CQRS), Ardalis.Result, Ardalis.SmartEnum, StronglyTypedId
-- Docker Compose
----
 
 ## Architecture
 
